@@ -30,23 +30,19 @@ input_df = pd.DataFrame([input_data])
 predictions = loaded_pipeline.predict(input_df)
 formatted_prediction = "{:,.2f} tỷ".format(predictions[0])
 
-# Display the prediction
 st.write(f"Dự đoán giá nhà:", f"<span style='color:green; font-size:24px'>{formatted_prediction}</span>", unsafe_allow_html=True)
 
-# Display the map using Mapbox
 st.markdown("""
 <style>
     .mapboxgl-ctrl-logo { display: none !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# Define the coordinates for Đà Nẵng (central location)
-latitude, longitude = 16.0674, 108.2200  # Central coordinates for Đà Nẵng
+latitude, longitude = vitri_options.get(location, (0, 0))
 
-st.map(
-    pd.DataFrame({
-        'latitude': [latitude],
-        'longitude': [longitude]
-    }),
-    use_container_width=True
-)
+map_data = pd.DataFrame({
+    'latitude': [latitude],
+    'longitude': [longitude]
+})
+
+st.map(map_data)
